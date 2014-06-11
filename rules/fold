@@ -1,0 +1,25 @@
+% Various simplifications
+
+#a * (b / #c) = (a/c) * b
+
+(#a * E) / (#b * E2) = (a / b * E) / E2
+
+A / (E * A ^ #n) = 1 / (E * A ^ (n-1))
+
+(?x ^ #n * E) / (#n2 * x) = (x^(n-1)*E) / n2
+
+A * B + C * A = A * (B + C)
+; Factor out *A
+
+%(A + B) / (#n * C) = (A/n + B/n) / C
+%; Move numerical constant to numerator
+
+(?v * #n) / #n2 = (n/n2) * v
+; Group numerical constants
+
+(A * u^#a) / u^#b = A * u^(a-b)
+; Simplify division of powers in the same variable
+
+A * (1 / B) =  A / B
+
+#a*(#b/c) = (a*b)/c

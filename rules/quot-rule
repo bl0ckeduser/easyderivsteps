@@ -1,0 +1,19 @@
+% Override 1/x^n
+D(x, 1 / (x^#n)) = D(x, x^-n)
+
+
+% Override N/x
+D(x, #n / u) = D(x, n * u^-1)
+
+D(x, (-(#n)) / u) = D(x, -n * u^-1)
+
+D(x, u / #n) =  D(x, u) / n
+
+
+% Override simple numeric case
+D(?x, f / #n) = 1 / n * D(x, f)
+; Pull out constant
+
+% Quotient rule for derivatives
+D(?x, f / g) = (g * D(x, f) - f * D(x, g) ) / (g * g)
+; Apply quotient rule on $ \\frac{d}{d{?x}} \\left[ \\frac{&f}{&g} \\right] $

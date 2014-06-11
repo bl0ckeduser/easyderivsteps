@@ -1,0 +1,44 @@
+% Basic derivative rules, based on those presented in SICP,
+% section 2.3. The syntax is not the same.
+%
+% Syntax:
+% D(VARIABLE, EXPRESSION) => derivative of EXPRESSION with
+%			     respect to VARIABLE.
+%
+%
+% Syntax notes:
+% -------------
+% e|x means "any expression e without any occurence
+% of x in it"
+%
+% @x means a non-number symbol x
+% #n means a number n
+
+D(x, e|x) = 0
+; $ \\frac{d}{d{?x}}\\left[ &e \\right] = 0 $ since *e is a constant with respect to *x
+
+D(@x, x) = 1
+; $ \\frac{d{?x}}{d{?x}} = 1 $
+%; Derivative of *x with respect to itself is 1
+
+%D(@x, u + v) = D(x, u) + D(x, v)
+%; Apply sum rule for *u $ + $ *v
+%; Apply sum rule on $ \\frac{d}{d{?x}}\\left[&u + &v\\right] $
+
+D(@x, u:x * (#a / #b)) = (a/b) * D(x, u)
+; Pull out constant $ \\frac{&a}{&b} $ from $ \\frac{d}{d{?x}}\\left[ &u \\cdot \\frac{&a}{&b} \\right] $
+
+D(@x, (#a / #b) * u:x) = (a/b) * D(x, u)
+; Pull out constant $ \\frac{&a}{&b} $ from $ \\frac{d}{d{?x}}\\left[ \\frac{&a}{&b} \\cdot &u \\right] $
+
+D(@x, #n * u:x) = n * D(x, u)
+; Pull out constant *n from $ \\frac{d}{d{?x}}\\left[ &n \\cdot &u \\right] $
+
+D(@x, (-(#n)) * u:x) = -n * D(x, u)
+; Pull out constant $ -{&n} $ from $ \\frac{d}{d{?x}}\\left[ -{&n} \\cdot &u \\right] $
+
+D(@x, u * v) = u * D(x, v) + v * D(x, u)
+; Apply product rule on $ \\frac{d}{d{?x}}\\left[ #u \\cdot #v \\right] $
+
+D(@x, -(u:x)) = -D(x, u)
+; Pull out sign (constant) from $ \\frac{d}{d{?x}}\\left[ &u \\right] $

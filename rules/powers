@@ -1,0 +1,55 @@
+% Chain-rule for powers...
+D(@var, e::var ^ #u) = u * e ^ (u - 1) * D(var, e)
+; Apply chain/power rule on $ \\frac{d}{d{?var}}\\left[ {#e}^{&u} \\right] $
+
+D(@var, e::var ^ (-(#u))) = -u * e ^ (-u - 1) * D(var, e)
+; Apply chain/power rule on $ \\frac{d}{d{?var}}\\left[ {#e}^{-{&u}} \\right] $
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+D(x, x^#n) = n * x ^ (n - 1)
+; Apply power rule on $ \\frac{d}{d{?x}} \\left[ {&x}^{&n} \\right] $
+
+
+D(x, x^(-(#n))) = -n * x ^ ((-n) - 1)
+; Apply power rule on $ \\frac{d}{d{?x}} \\left[ {&x}^{-{&n}} \\right] $
+
+
+D(a, (b|'e)^(@c)) = D(a, e^(log(b) * c))
+; Rewrite $ {#b}^{&c} $ as a power of $ e $ to ease further work
+
+% override for variable case
+D(?u, ('e)^u) = e^u
+; $ \\frac{d}{d{&u}}\\left[{{e}^{&u}}\\right] = {e}^{&u} $
+
+D(u, ('e)^u) = e^u
+; $ \\frac{d}{d{u}}\\left[{{e}^{u}}\\right] = {e}^{u} $; here $ u = $ *u
+
+log('e) = 1
+ln('e) = 1
+
+% u|'e^(@x) = e^(log(u) * x)
+% ; Rewrite $ {&u}^{&x} $ as a power of $ e $ to ease further work
+
+sqrt(u) ^ 2 = u
+
+(u^#n)^#n2 = u^(n * n2)
+
+% u^#n * u^#n2 = u^(n + n2)
+
+a ^ b / a = a^(b-1)
+
+A^1 = A
+A^0 = 1
+A^(-1) = 1 / A
+
+u^a * u^b = u^(a+b)
+
+E * (E^n) = E^(n+1)
+
+
+u ^ #n / u = u^(n-1)
+
+u^1 = u
+

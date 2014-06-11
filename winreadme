@@ -1,0 +1,94 @@
+
+EasyDerivSteps is a free program that takes derivatives step-by-step,
+showing explanations in blue and highlighting in red the parts of the 
+expression that have changed since the previous step. It is preloaded with 
+the basic rules of differentiation including the constant rule, sum rule, 
+product rule, quotient rule, chain rule, and power rule. It also knows the 
+derivatives of trigonometric, inverse-trigonometric, exponential, square-root,
+and logarithmic functions. Finally, it is preloaded with close to 100 rules
+of algebraic simplification, which allow it to cancel-out or group common 
+terms in expressions.
+
+------------------------------------------------------------------------------
+
+This is the Windows build. It is known to run on Windows XP and later, but 
+it might run on earlier versions of Windows as well.
+
+It might take a few seconds for the program to start up on its first launch.
+
+The program's user interface should be mostly self-explanatory. There is 
+a "Help" button if issues arise. 
+
+Feel free to send bug reports, comments, criticism, etc. to me via my email, 
+    bl0ckedusersoft@gmail.com
+
+Updates, alternative versions, etc. can be found at the program's homepage:
+    https://sites.google.com/site/bl0ckeduserssoftware/easyderivsteps
+
+Updates are planned, in particular with respect to the program's algebraic
+simplifications capabilities, which are still deficient in some areas.
+
+The source code for part of the program can be found at 
+    https://github.com/bl0ckeduser/symdiff
+The whole program may be open-sourced at some point.
+
+This program makes use of the software technologies emscripten, MathJax,
+and XULRunner. It also uses icons created by Oxygen Team. Further 
+details on this can be found by clicking on the "About" button.
+
+------------------------------------------------------------------------------
+
+                             Version history
+
+- Version 1.8 - !!! TBD TBD TBD !!!
+  Fixed several errors in the algebraic simplification code;
+  added .png default extension in "Save as PNG" dialog;
+  improved help page;
+  improved arithmetic cancellations (thanks Umair);
+  fixed crashes on invalid syntax (thanks knipil, smikims);
+  autofocus "expression" field on startup
+
+- Version 1.7 - 24 April 2014
+  Fixed an output presentation issue (sometimes e.g. "1" was being
+  displayed as "1 * " after a cancellation); added PNG export
+  functionality.
+
+- Version 1.6 - 21 April 2014
+  Rewrote the new progress bar to use native system controls
+
+- Version 1.5 - 18 April 2014
+  User interface improvements: no more junk messages at the bottom
+  of the screen, progress bar for rendering
+
+- Version 1.4 - 10 April 2014
+  Fixed an algebraic simplification error, fixed very slow startup
+  and slow "new derivative" button.
+
+- Version 1.3 - 31 March 2014
+  Fixes some crashes that occured when large expressions were inputted
+
+- Version 1.2 - 15 February 2014
+  This release comes with an improved user interface; fixes
+  an issue where the "preview" button would hang when inputting
+  expressions containing several terms; and improves some of the
+  step-description comments.
+
+- Version 1.1 - 27 January 2014
+  This release adds support for implicit-multiplication shorthands
+  like "5x" instead of "5*x" and "(1+x)(1+x^2)^2" instead of 
+  "(1+x) * (1+x^2)^2". The Help menu has been updated with examples
+  using this new syntax.
+
+- Version 1.0 - 13 June 2013
+  First release
+
+------------------------------------------------------------------------------
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
+THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR
+OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
+ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+OTHER DEALINGS IN THE SOFTWARE.
+

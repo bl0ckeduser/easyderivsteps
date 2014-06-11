@@ -1,0 +1,345 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Step-by-step Derivative Calculator</title>
+    <style>
+      .emscripten { padding-right: 0; margin-left: auto; margin-right: auto; display: block; }
+      textarea.emscripten { font-family: monospace; width: 80%; }
+      div.emscripten { text-align: center; }
+      div.emscripten_border { border: 1px solid black; }
+      /* the canvas *must not* have any border or padding, or mouse coords will be wrong */
+      canvas.emscripten { border: 0px none; }
+    </style>
+  </head>
+  <body bgcolor='ffffff'>
+    <div class="emscripten" id="status">Downloading...</div>
+    <div class="emscripten">
+      <progress value="0" max="100" id="progress" hidden=1></progress>  
+    </div>
+    <canvas style="display:none;" width=0 height=0 class="emscripten" id="canvas" oncontextmenu="event.preventDefault()"></canvas>
+    <textarea style="display:none;" class="emscripten" id="output" rows="8"></textarea>
+
+	<script type="text/x-mathjax-config">
+	  MathJax.Hub.Config({
+		imageFont: null,
+		extensions: ["tex2jax.js"],
+		jax: ["input/TeX","output/HTML-CSS"],
+		tex2jax: {inlineMath: [["$","$"],["\\(","\\)"]]},
+		"HTML-CSS": {
+		  availableFonts: ["TeX"],
+		  preferredFont: "TeX",
+		  imageFont: null
+		},
+		MathMenu: { showRenderer: false },
+		messageStyle: "none"
+	  });	
+	</script> 
+	<script type="text/javascript"
+	  src="mathjax/media/libraries/mathjax/MathJax.js">
+	</script>
+
+    <script type='text/javascript'>
+      // connect to canvas
+      var Module = {
+        preRun: [],
+        postRun: [],
+        print: (function() {
+          var element = document.getElementById('output');
+          element.value = ''; // clear browser cache
+          return function(text) {
+            text = Array.prototype.slice.call(arguments).join(' ');
+            // These replacements are necessary if you render to raw HTML
+            //text = text.replace(/&/g, "&amp;");
+            //text = text.replace(/</g, "&lt;");
+            //text = text.replace(/>/g, "&gt;");
+            //text = text.replace('\n', '<br>', 'g');
+            element.value += text + "\n";
+            element.scrollTop = 99999; // focus on bottom
+          };
+        })(),
+        printErr: function(text) {
+          text = Array.prototype.slice.call(arguments).join(' ');
+          if (0) { // XXX disabled for safety typeof dump == 'function') {
+            dump(text + '\n'); // fast, straight to the real console
+          } else {
+            console.log(text);
+          }
+        },
+        canvas: document.getElementById('canvas'),
+        setStatus: function(text) {
+          if (Module.setStatus.interval) clearInterval(Module.setStatus.interval);
+          var m = text.match(/([^(]+)\((\d+(\.\d+)?)\/(\d+)\)/);
+          var statusElement = document.getElementById('status');
+          var progressElement = document.getElementById('progress');
+          if (m) {
+            text = m[1];
+            progressElement.value = parseInt(m[2])*100;
+            progressElement.max = parseInt(m[4])*100;
+            progressElement.hidden = false;
+          } else {
+            progressElement.value = null;
+            progressElement.max = null;
+            progressElement.hidden = true;
+          }
+          statusElement.innerHTML = text;
+        },
+        totalDependencies: 0,
+        monitorRunDependencies: function(left) {
+          this.totalDependencies = Math.max(this.totalDependencies, left);
+          Module.setStatus(left ? 'Preparing... (' + (this.totalDependencies-left) + '/' + this.totalDependencies + ')' : 'All downloads complete.');
+        }
+      };
+      Module.setStatus('Downloading...');
+    </script>      
+    <script type='text/javascript'>
+
+      {{{ SCRIPT_CODE }}}
+
+    </script>
+<div id="entryform" style="font-size:16px;">
+	<br>
+	<br>
+<form action="" autocomplete="off" id="entry" onsubmit="return go();">
+	Expression: <input type="text" style="font-size:16px;" id="expr" size="50" autofocus><br>
+	Variable: <input type="text" style="font-size:16px;" id="var"><br>	
+	<input type="submit" value="Differentiate">
+</form>
+</div>
+	<input type="submit" id="prevbut" value="Preview" onClick="show_preview();">
+
+	<div id="preview" style="font-size:22px;">
+	</div>
+
+	<div id="metadisplay" style="display:none;">
+		<div id="typewait">
+			<br>
+			<br>
+			Rendering...
+			<br>
+			<br>
+			<div id="progress_zone">
+				<progress ID="progress_bar" STYLE="width: 500px; height: 30px;" max="100" value="0">
+			</div>
+	
+			<br>
+			<br>
+			<br>
+		</div>
+		<div id="result-display" style="display:none; font-size:22px;">
+		</div>
+	</div>
+
+	<script type="text/javascript">
+		/* void jsdoit(char *expression, char *target_div, int run_main) */
+		jsdoit = Module.cwrap('jsdoit', 'number', ['string', 'string', 'number']);
+		failed = 0;
+		var fontsize = 16;
+		function incfont(div) {
+			fs = parseInt(document.getElementById(div).style.fontSize);
+			fs += 2;
+			document.getElementById(div).style.fontSize = ""+fs+"px";
+		}
+		function decfont(div) {
+			fs = parseInt(document.getElementById(div).style.fontSize);
+			fs -= 2;
+			document.getElementById(div).style.fontSize = ""+fs+"px";
+		}
+		/* form validation */
+		function check_fields() {
+			e = document.getElementById('expr').value;
+			v = document.getElementById('var').value;
+			if (e == '' && v == '') {
+				alert("You are missing both an expression and a variable...");
+				return false;
+			}
+			if (e == '') {
+				alert("You are missing an expression...");
+				return false;
+			}
+			if (v == '') {
+				alert("You are missing a variable of differentiation...");
+				return false;
+			}
+			return true;
+		}
+		/* show/hide a div by id */
+		function do_show(id) {
+			document.getElementById(id).style.display = "block";
+		}
+		function do_hide(id) {
+			document.getElementById(id).style.display = "none";
+		}
+		function show_result() {
+			do_show('result-display');
+			do_hide('typewait');
+			do_show('new');	
+			do_show('fontcontrols');
+		}
+		function build_command() {
+			e = document.getElementById('expr').value;
+			v = document.getElementById('var').value;
+			return "diff(" + e + ", " + v + ")";
+		}
+		function go() {
+			if (!check_fields())
+				return false;
+			do_hide('inc');
+			clear_preview();
+			failed = 0;
+			check = 0;
+			try {
+				check = jsdoit(build_command(), "result-display", 1);
+			} catch (err) {
+				if (!failed)	/* gasp ! no error was raised ! */
+					alert("Differentiation has failed. Often this is caused by invalid syntax. Click \"Help\" for a brief syntax guide.");
+				failed = 1;
+			}
+			if (check == 0 && !failed) {
+				failed = 1;
+				alert("Differentiation has failed. Often this is caused by invalid syntax. Click \"Help\" for a brief syntax guide.");
+			}
+			if (!failed) {
+				do_show('metadisplay');
+				var math = document.getElementById("result-display");
+				MathJax.Hub.Queue(["Typeset",MathJax.Hub,math]);
+				MathJax.Hub.Queue(show_result);
+				do_hide('entryform');
+				do_hide('prevbut');
+			}
+			return false;
+		}
+		function show_preview() {
+			if (!check_fields())
+				return false;
+			document.getElementById('preview').innerHTML = '';
+			failed = 0;
+			check = 0;
+			try {
+				check = jsdoit(build_command(), "preview", 0);
+			} catch(e) {
+				if (!failed)	/* gasp ! no error was raised ! */
+					alert("Preview-generation has failed. Often this is caused by invalid syntax. Click \"Help\" for a brief syntax guide.");
+				failed = 1;
+			}
+
+			if (check == 0 && !failed) {
+				failed = 1;
+				alert("Preview-generation has failed. Often this is caused by invalid syntax. Click \"Help\" for a brief syntax guide.");
+			}
+
+			if (!failed) {
+				var math = document.getElementById("preview");
+				MathJax.Hub.Queue(["Typeset",MathJax.Hub,math]);
+			}
+		}
+		function clear_preview() {
+			document.getElementById('preview').innerHTML = '';
+		}
+		function fail_alert(s) {
+			alert(s);
+			failed = 1;
+		}
+		function diff_incomplete() {
+			do_show('inc');
+		}
+		function percentage_done(p) {
+			document.getElementById("progress_bar").value = p;
+		}
+		function savePNG() {
+			var body = document.body,
+			    html = document.documentElement;
+
+			var y = Math.max( body.scrollHeight, body.offsetHeight, 
+					   html.clientHeight, html.scrollHeight, html.offsetHeight );
+
+			var x = Math.max( body.scrollWidth, body.offsetWidth, 
+					   html.clientWidth, html.scrollWidth, html.offsetWidth );
+
+			var ctx = document.getElementById("copycanvas").getContext("2d");
+			document.getElementById("copycanvas").width = x;
+			document.getElementById("copycanvas").height = y;
+			ctx.drawWindow(window, 0, 0, x, y, "rgb(255,255,255)");
+			/* ================================================= */
+
+			/* https://developer.mozilla.org/en-US/docs/XPCOM_Interface_Reference/nsIFilePicker */
+			const nsIFilePicker = Components.interfaces.nsIFilePicker;
+
+			var fp = Components.classes["@mozilla.org/filepicker;1"]
+						   .createInstance(nsIFilePicker);
+			fp.init(window, "Save to PNG", nsIFilePicker.modeSave);
+			
+			/*
+			 * If we do this, the "Save as" GUI box  will highlight the
+			 * part before the .png. This is the way it happens in Chatzilla...
+			 * does anybody ever even use XUL for anything other than chatzilla
+			 * and firefox ?! never break the chain
+		 	 */
+			fp.appendFilter("PNG image file", "*.png");
+			fp.defaultString = "steps.png";
+
+			fp.appendFilters(nsIFilePicker.filterAll /* | nsIFilePicker.filterText */);
+
+			var rv = fp.show();
+			if (rv == nsIFilePicker.returnOK || rv == nsIFilePicker.returnReplace) {
+			  var file = fp.file;
+			  // Get the path as string. Note that you usually won't 
+			  // need to work with the string paths.
+			  var path = fp.file.path;
+			  // work with returned nsILocalFile...
+			}
+			/* ================================================= */
+			saveCanvas(document.getElementById("copycanvas"), file.path);
+		}
+
+		/* https://developer.mozilla.org/en-US/Add-ons/Code_snippets/Canvas */
+		function saveCanvas(canvas, destFile) {
+		  var file = Components.classes["@mozilla.org/file/local;1"]
+				       .createInstance(Components.interfaces.nsILocalFile);
+		  file.initWithPath(destFile);
+
+		  var io = Components.classes["@mozilla.org/network/io-service;1"]
+				     .getService(Components.interfaces.nsIIOService);
+		  var source = io.newURI(canvas.toDataURL("image/png", ""), "UTF8", null);
+		  var target = io.newFileURI(file)
+		    
+		  var persist = Components.classes["@mozilla.org/embedding/browser/nsWebBrowserPersist;1"]
+				          .createInstance(Components.interfaces.nsIWebBrowserPersist);
+		  
+		  persist.persistFlags = Components.interfaces.nsIWebBrowserPersist.PERSIST_FLAGS_REPLACE_EXISTING_FILES;
+		  persist.persistFlags |= Components.interfaces.nsIWebBrowserPersist.PERSIST_FLAGS_AUTODETECT_APPLY_CONVERSION;
+		  
+		  /*
+		  var xfer = Components.classes["@mozilla.org/transfer;1"]
+				       .createInstance(Components.interfaces.nsITransfer);
+		  xfer.init(source, target, "", null, null, null, persist, null);
+		  persist.progressListener = xfer;
+                  */
+		  
+		  persist.saveURI(source, null, null, null, null, file, null);
+		}
+	</script>
+
+	<!-- used for PNG save -->
+	<canvas style="display:none;" id="copycanvas"></canvas>
+
+	<div id="inc" style="display: none;">
+	<br>
+	<br>
+	Differentiation has not completed successfully. Most likely this means you inputed a function which this program hasn't been taught the derivative of. Please click "Help" to see a list of supported functions.
+	<br>
+	</div>
+
+	<div id="percentage"></div>
+
+	<div id="new" style="display:none;">
+	</div>
+	<br>
+	<hr>
+	<div id="derp"><font size="-1">(C) 2013-2014, bl0ckeduser</font></div>
+  </body>
+</html>
+
+
+

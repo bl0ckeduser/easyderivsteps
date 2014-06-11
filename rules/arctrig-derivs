@@ -1,0 +1,40 @@
+% Source: http://www.themathpage.com/acalc/inverse-trig.htm
+% (for the first three)
+
+D(?x, arcsin(x)) = 1/sqrt(1-x^2)
+; $ \\frac{d}{d{&x}}\\left[ \\arcsin(&x) \\right] = \\frac{1}{\\sqrt{1 - {&x}^2}} $
+
+D(x, arcsin(x)) = 1/sqrt(1-x^2)
+; $ \\frac{d}{d{u}}\\left[ \\arcsin(u) \\right] = \\frac{1}{\\sqrt{1 - {u}^2}} $; here $ u = &x $
+
+D(?x, arccos(x)) = -(1/sqrt(1-x^2))
+; $ \\frac{d}{d{&x}}\\left[\\arccos(&x) \\right] = - \\frac{1}{\\sqrt{1 - {&x}^2}} $
+
+D(x, arccos(x)) = -(1/sqrt(1-x^2))
+; $ \\frac{d}{d{u}}\\left[\\arccos(u) \\right] = - \\frac{1}{\\sqrt{1 - {u}^2}} $; here $ u = &x $
+
+D(?x, arctan(x)) = 1/(1 + x^2)
+; $ \\frac{d}{d{&x}} \\left[\\arctan(&x) \\right] = \\frac{1}{1 + {&x}^2} $
+
+D(x, arctan(x)) = 1/(1 + x^2)
+; $ \\frac{d}{d{u}} \\left[\\arctan(u) \\right] = \\frac{1}{1 + {u}^2} $; here $ u = &x $
+
+% got these out of a serious CAS
+
+D(?x, arccsc(x)) = -1/(sqrt(1-1/x^2) * x^2)
+; $ \\frac{d}{d{&x}}\\left[{arccsc(&x)}\\right] = \\frac{-1}{\\sqrt{1 - \\frac{1}{{&x}^{2}}} \\cdot {&x}^{2}} $
+
+D(x, arccsc(x)) = -1/(sqrt(1-1/x^2) * x^2)
+; $ \\frac{d}{d{u}}\\left[{arccsc(u)}\\right] = \\frac{-1}{\\sqrt{1 - \\frac{1}{{u}^{2}}} \\cdot {u}^{2}} $; here $ u = &x $
+
+D(?x, arccot(x)) = -1/(x^2 + 1)
+; $ \\frac{d}{d{&x}}\\left[{arccot(&x)}\\right] = \\frac{-1}{1 + {&x}^{2}} $
+
+D(x, arccot(x)) = -1/(x^2 + 1)
+; $ \\frac{d}{d{u}}\\left[{arccot(u)}\\right] = \\frac{-1}{1 + {u}^{2}} $; here $ u = &x $
+
+D(?x, arcsec(x)) = 1/(sqrt(1-1/x^2) * x^2)
+; $ \\frac{d}{d{&x}}\\left[{arcsec(&x)}\\right] = \\frac{1}{\\sqrt{1 - \\frac{1}{{&x}^{2}}} \\cdot {&x}^{2}} $
+
+D(x, arcsec(x)) = 1/(sqrt(1-1/x^2) * x^2)
+; $ \\frac{d}{d{u}}\\left[{arcsec(u)}\\right] =  \\frac{1}{\\sqrt{1 - \\frac{1}{{u}^{2}}} \\cdot {u}^{2}} $; here $ u = &x $

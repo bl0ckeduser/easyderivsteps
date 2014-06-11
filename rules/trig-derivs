@@ -1,0 +1,38 @@
+% Basic trigonometric derivatives
+% Source: http://www.sosmath.com/calculus/diff/der03/img1.gif
+
+D(?u, sin(u)) = cos(u)
+; $ \\frac{d}{d{?u}}\\left[ \\sin({&u}) \\right] = \\cos({&u}) $
+
+D(u, sin(u)) = cos(u)
+; $ \\frac{d}{d{u}}\\left[ \\sin({u}) \\right] = \\cos({u}) $; here $ u = &u $
+
+D(?u, tan(u)) = sec(u) * sec(u)
+; $ \\frac{d}{d{?u}}\\left[ \\tan({&u}) \\right] = \\sec({&u}) \\cdot \\sec({&u}) $
+
+D(u, tan(u)) = sec(u) * sec(u)
+; $ \\frac{d}{d{u}}\\left[ \\tan({u}) \\right] = \\sec({u}) \\cdot \\sec({u}) $; here $ u = &u $
+
+D(?u, sec(u)) = sec(u) * tan(u)
+; $ \\frac{d}{d{?u}}\\left[ \\sec({&u}) \\right] = \\sec({&u}) \\cdot \\tan({&u}) $
+
+D(u, sec(u)) = sec(u) * tan(u)
+; $ \\frac{d}{d{u}}\\left[ \\sec({u}) \\right] = \\sec({u}) \\cdot \\tan({u}) $; here $ u = &u $
+
+D(?u, cos(u)) = -sin(u)
+; $ \\frac{d}{d{?u}}\\left[ \\cos({&u}) \\right] = - \\sin({&u}) $
+
+D(u, cos(u)) = -sin(u)
+; $ \\frac{d}{d{u}}\\left[ \\cos({u}) \\right] = - \\sin({u}) $; here $ u = &u $
+
+D(?u, cot(u)) = -csc(u) * csc(u)
+; $ \\frac{d}{d{?u}}\\left[ \\cot({&u}) \\right] = - \\csc({&u}) \\cdot \\csc({&u}) $
+
+D(u, cot(u)) = -csc(u) * csc(u)
+; $ \\frac{d}{d{u}}\\left[ \\cot({u}) \\right] = - \\csc({u}) \\cdot \\csc({u}) $; here $ u = &u$
+
+D(?u, csc(u)) = -csc(u) * cot(u)
+; $ \\frac{d}{d?u} \\left[ \\csc({&u}) \\right] = - \\csc({&u}) \\cdot \\cot({&u}) $
+
+D(u, csc(u)) = -csc(u) * cot(u)
+; $ \\frac{d}{du} \\left[ \\csc({u}) \\right] = - \\csc({u}) \\cdot \\cot({u}) $; here $ u = &u $
