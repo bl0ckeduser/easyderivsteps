@@ -451,12 +451,18 @@ int optimize(exp_tree_t *et)
 				if (sametree(below, cancel)) {
 					make_tree_number(below, 1);
 					make_tree_number(cancel, 1);
-					
 					return(1);
 				}
 			}
 		}
 	}
+
+	/* 
+	 * 2014-06-11
+	 * 
+	 * x ^ 2 * x ^3 * x^A * x
+	 * messed up here prior to fix
+	 */
 
 	/* A * B * A * XYZ * A => A^3 * B * XYZ */
 	if (et->child_count >= 2
@@ -468,9 +474,13 @@ int optimize(exp_tree_t *et)
 					++chk;
 				if (et->child[w]->head_type == EXP
 				&& et->child[w]->child_count == 2
-				&& sametree(et->child[w]->child[0], et->child[q])
-				&& et->child[w]->child[1]->head_type == NUMBER)
-					chk += tok2int(et->child[w]->child[1]->tok);
+				&& sametree(et->child[w]->child[0], et->child[q])) {
+					if (et->child[w]->child[1]->head_type == NUMBER) {
+						chk += tok2int(et->child[w]->child[1]->tok);
+					} else {
+						goto non_number_power;
+					}
+				}
 			}
 
 			if (et->child[q]->head_type == NUMBER)
@@ -496,55 +506,12 @@ int optimize(exp_tree_t *et)
 						}
 					}
 				}
-				
 				return(1);
 			}
 		}
 	}
 
-	/* A  + B + A + XYZ + A => A*3 + B + XYZ */
-	if (et->child_count >= 2
-		&& et->head_type == ADD) {
-		for (q = 0; q < et->child_count; ++q) {
-			chk = 0;
-			for (w = 0; w < et->child_count; ++w) {
-				if (sametree(et->child[w], et->child[q]))
-					++chk;
-				if (et->child[w]->head_type == MULT
-				&& et->child[w]->child_count == 2
-				&& sametree(et->child[w]->child[0], et->child[q])
-				&& et->child[w]->child[1]->head_type == NUMBER)
-					chk += tok2int(et->child[w]->child[1]->tok);
-			}
-
-			if (et->child[q]->head_type == NUMBER)
-				chk = 0;
-
-			if (chk > 1) {
-				chk2 = 0;
-				cancel = copy_tree(et->child[q]);
-				for (q = 0; q < et->child_count; ++q) {
-					if (sametree(cancel, et->child[q])
-					|| (et->child[q]->head_type == MULT
-						&& et->child[q]->child_count == 2
-						&& sametree(et->child[q]->child[0], cancel))) {
-						if(!chk2) {
-							chk2 = 1;
-							new = new_exp_tree(MULT, NULL);
-							new_ptr = alloc_exptree(new);
-							add_child(new_ptr, cancel);
-							add_child(new_ptr, new_tree_number(chk));
-							et->child[q] = new_ptr;
-						} else {
-							make_tree_number(et->child[q], 0);
-						}
-					}
-				}
-				
-				return(1);
-			}
-		}
-	}
+non_number_power: ;
 
 	/* 
 	 * Remove 1's from products, 0's from additions,
@@ -700,9 +667,21 @@ filter_zeroes:
 						/* factor => 1 */
 						for (e = 0; e < et->child_count; ++e)
 							for (r = 0; r < et->child[e]->child_count; ++r)
-								if (sametree(et->child[e]->child[r], cancel))
+								if (sametree(et->child[e]->child[r], cancel)) {
 									make_tree_number(et->child[e]->child[r], 1);
-					
+									/*
+								 	 * 2014-06-10
+									 *
+									 * another dumb bug fixed:
+									 * only cancel once!!!
+									 *
+									 * ]=> (A * B * C) + (X * Y * B * B) + (B * S)
+									 * B * (A * C + X * Y * B + S)
+									 *
+									 */
+									break;
+								}
+
 						/* make new product tree */
 						new = new_exp_tree(MULT, NULL);
 						new_ptr = alloc_exptree(new);
@@ -752,24 +731,43 @@ filter_zeroes:
 		cancel = copy_tree(et->child[1]->child[0]);
 		below = et->child[0];
 
-		chk = 0;
+		/*
+		 * 2014-06-10
+		 *
+		 * ensure all the ocurrences of C
+		 * in the numerator are of the 2-child EXP kind
+		 * before proceding !!
+		 */
+		chk = 1;
 		for (i = 0; i < below->child_count; ++i) {
-			if (below->child[i]->child_count == 2
-			&& below->child[i]->head_type == EXP) {
-				if (sametree(below->child[i]->child[0], cancel)) {
-					chk = 1;
-					new = new_exp_tree(SUB, NULL);
-					new_ptr = alloc_exptree(new);
-					add_child(new_ptr, copy_tree(below->child[i]->child[1]));
-					add_child(new_ptr, copy_tree(et->child[1]->child[1]));
-					below->child[i]->child[1] = new_ptr;
+			if (!indep(below->child[i], cancel)) {
+				if (! (below->child[i]->child_count == 2
+					&& below->child[i]->head_type == EXP)) {
+					chk = 0;
+					break;
 				}
 			}
 		}
+
 		if (chk) {
-			et->child_count--;
-			
-			return(1);
+			chk = 0;
+			for (i = 0; i < below->child_count; ++i) {
+				if (below->child[i]->child_count == 2
+				&& below->child[i]->head_type == EXP) {
+					if (sametree(below->child[i]->child[0], cancel)) {
+						chk = 1;
+						new = new_exp_tree(SUB, NULL);
+						new_ptr = alloc_exptree(new);
+						add_child(new_ptr, copy_tree(below->child[i]->child[1]));
+						add_child(new_ptr, copy_tree(et->child[1]->child[1]));
+						below->child[i]->child[1] = new_ptr;
+					}
+				}
+			}
+			if (chk) {
+				et->child_count--;
+				return(1);
+			}
 		}
 
 	}
@@ -933,7 +931,7 @@ filter_zeroes:
 					derp = below->child[q];
 				}
 	
-		if (chk == 1) {
+		if (chk == 1 && below->head_type == ADD) {
 			herp = copy_tree(et->child[0]);
 
 			new2 = new_exp_tree(ADD, NULL);
