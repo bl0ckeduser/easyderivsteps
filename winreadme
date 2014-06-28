@@ -40,13 +40,14 @@ details on this can be found by clicking on the "About" button.
 
                              Version history
 
-- Version 1.8 - !!! TBD TBD TBD !!!
+- Version 1.8 - 13 June 2014
   Fixed several errors in the algebraic simplification code;
   added .png default extension in "Save as PNG" dialog;
-  improved help page;
+  improved and updated help page;
   improved arithmetic cancellations (thanks Umair);
   fixed crashes on invalid syntax (thanks knipil, smikims);
-  autofocus "expression" field on startup
+  added notice to consult help page if in doubt;
+  implemented autofocus on "expression" field on startup
 
 - Version 1.7 - 24 April 2014
   Fixed an output presentation issue (sometimes e.g. "1" was being

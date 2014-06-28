@@ -1,4 +1,4 @@
-REL=DEV
+REL=18
 
 echo "MAIN BUILD...."
 ./build.sh

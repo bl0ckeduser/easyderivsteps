@@ -109,6 +109,12 @@
 </div>
 	<input type="submit" id="prevbut" value="Preview" onClick="show_preview();">
 
+<div id="doubt">
+<br>
+<br>
+If in doubt, please consult the syntax guide available through the "Help" button.
+</div>
+
 	<div id="preview" style="font-size:22px;">
 	</div>
 
@@ -186,6 +192,7 @@
 			if (!check_fields())
 				return false;
 			do_hide('inc');
+			do_hide('doubt');
 			clear_preview();
 			failed = 0;
 			check = 0;
