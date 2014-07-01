@@ -40,6 +40,9 @@ details on this can be found by clicking on the "About" button.
 
                              Version history
 
+- Version 1.9
+  Fixed errors in the algebraic simplification code
+
 - Version 1.8 - 13 June 2014
   Fixed several errors in the algebraic simplification code;
   added .png default extension in "Save as PNG" dialog;
