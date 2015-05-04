@@ -40,6 +40,9 @@ details on this can be found by clicking on the "About" button.
 
                              Version history
 
+- Version 1.A
+  Fixed a hang
+
 - Version 1.9 - 1 July 2014
   Fixed errors in the algebraic simplification code
 
