@@ -1,3 +1,8 @@
 % square root...
+
+D(?u, sqrt(u)) = 1 / (2 * sqrt(u))
+; $ \\frac{d}{d{&u}}\\left[ \\sqrt{&u} \\right] = \\frac{1}{2 \\sqrt{&u}} $
+
+
 D(u, sqrt(u)) = 1 / (2 * sqrt(u))
 ; $ \\frac{d}{du}\\left[ \\sqrt{u} \\right] = \\frac{1}{2 \\sqrt{u}} $; here $ u = &u $
