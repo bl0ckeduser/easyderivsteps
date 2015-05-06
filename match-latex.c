@@ -403,7 +403,7 @@ restart:
 									sprintf(step_desc, "%s \\\\left[", step_desc);
 
 								if (t == '#' && dict->match[key]->head_type != VARIABLE)
-									sprintf(step_desc, "%s (", step_desc);
+									sprintf(step_desc, "%s \\\\left(", step_desc);
 
 								strcat(step_desc, buff2);
 
@@ -414,7 +414,7 @@ restart:
 									sprintf(step_desc, "%s \\\\right] ", step_desc);
 
 								if (t == '#' && dict->match[key]->head_type != VARIABLE)
-									sprintf(step_desc, "%s ) ", step_desc);
+									sprintf(step_desc, "%s \\\\right) ", step_desc);
 
 								puts(buff2);
 							}
