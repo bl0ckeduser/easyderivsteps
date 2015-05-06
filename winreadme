@@ -44,7 +44,8 @@ details on this can be found by clicking on the "About" button.
   Fixed a hang;
   improved step-description comment for square root;
   slightly improved GUI;
-  fixed vertical sizing of parentheses in certain cases
+  fixed vertical sizing of parentheses in certain cases;
+  add an explicit check for imbalanced parentheses in the input
 
 - Version 1.9 - 1 July 2014
   Fixed errors in the algebraic simplification code
