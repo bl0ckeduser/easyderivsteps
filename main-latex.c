@@ -98,6 +98,19 @@ int check_incomplete(exp_tree_t *et)
 	return 0;
 }
 
+int parencheck(char *lin)
+{
+	int depth = 0;
+	for (; *lin; ++lin) {
+		if (*lin == '(')
+			++depth;	
+		else if (*lin == ')')
+			if (--depth < 0)
+				return 0;
+	}
+	return depth == 0;
+}
+
 char *doit(int run_main_program, char *lin)
 {
 	full = malloc(1024 * 2);
@@ -107,6 +120,10 @@ char *doit(int run_main_program, char *lin)
 	do {
 		/* Create a GC "zone" for the work done herein */
 		cgc_set(iter = new_gca());
+
+		if (!parencheck(lin)) {
+			fail_alert("Imbalanced parentheses in input");
+		}
 
 		/* Lex the line */
 		tokens = tokenize(lin);
