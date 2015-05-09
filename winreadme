@@ -41,9 +41,9 @@ details on this can be found by clicking on the "About" button.
                              Version history
 
 - Version 1.10
-  Fixed a hang;
-  improved step-description comment for square root;
-  slightly improved GUI;
+  Fixed an infinite loop in the algebraic simplification code;
+  slightly improved step-description comments in certain cases;
+  slightly improved GUI (autofocus on OK, hide debug text, fix icon);
   fixed vertical sizing of parentheses in certain cases;
   add an explicit check for imbalanced parentheses in the input
 
