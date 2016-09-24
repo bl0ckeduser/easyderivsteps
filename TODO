@@ -1,0 +1,3 @@
+- check paren imbalance, otherwise nonsense is displayed
+- more reductions ?!
+- bullshit syntax like lnx for ln(x) ?!
