@@ -1,0 +1,44 @@
+<?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
+
+<window xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+    title="Step-by-step Derivative Calculator"
+    id="webapp-window"
+    width="800"
+    height="600"
+    persist="screenX screenY width height sizemode">
+    <script>
+	function incfont() {
+		// http://stackoverflow.com/questions/8489251/call-a-javascript-function-which-is-defined-linked-in-a-xul-browser-element
+		b = document.getElementById("id_browser");
+		b.contentWindow.incfont('result-display');
+	}
+	function decfont() {
+		// http://stackoverflow.com/questions/8489251/call-a-javascript-function-which-is-defined-linked-in-a-xul-browser-element
+		b = document.getElementById("id_browser");
+		b.contentWindow.decfont('result-display');
+	}
+
+	function savePNG() {
+		b = document.getElementById("id_browser");
+		b.contentWindow.savePNG();
+	}
+
+   </script>
+<toolbox> 
+    <toolbar>
+      <toolbarbutton label="New Derivative" orient="vertical" image="images/filenew.png" oncommand=" window.location.reload();"/>
+      <toolbarbutton label="Help" oncommand='window.open("chrome://webapp/content/help.xul", "about", "chrome,width=800,height=700,centerscreen,resizable,dialog");' orient="vertical" image="images/help_about.png"/>
+      <toolbarbutton label="About this software" orient="vertical" image="images/help_about.png" oncommand='window.open("chrome://webapp/content/about.xul", "about", "chrome,width=800,height=700,centerscreen,resizable,dialog");'/>
+      <toolbarbutton label="Increase font" oncommand="incfont();" orient="vertical" image="images/zoom_in.png"/>
+      <toolbarbutton label="Decrease font" oncommand="decfont();" orient="vertical" image="images/zoom_out.png"/>
+      <toolbarbutton label="Save as PNG" oncommand="savePNG();" orient="vertical" image="images/document-save-as.png"/>
+      <toolbarbutton label="Quit" oncommand="window.close();" orient="vertical" image="images/application-exit.png"/>
+    </toolbar>
+</toolbox>
+  <browser type="content-primary"
+      src="index.html"
+      flex="1"
+      id="id_browser"
+      disablehistory="true"/>
+</window>
+

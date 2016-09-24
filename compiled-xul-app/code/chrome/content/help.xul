@@ -1,0 +1,14 @@
+<?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
+
+<window xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+    title="Help"
+    id="webapp-help-window"
+    width="800"
+    height="700"
+    persist="screenX screenY width height sizemode">
+  <browser type="content-primary"
+      src="help-box.html"
+      flex="1"
+      disablehistory="true"/>
+</window>
+

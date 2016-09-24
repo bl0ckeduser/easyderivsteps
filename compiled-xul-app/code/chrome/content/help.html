@@ -1,0 +1,251 @@
+﻿<!doctype html>
+<html lang="en-us">
+  <head>
+
+
+
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Step-by-step Derivative Calculator</title>
+    <style>
+      .emscripten { padding-right: 0; margin-left: auto; margin-right: auto; display: block; }
+      textarea.emscripten { font-family: monospace; width: 80%; }
+      div.emscripten { text-align: center; }
+      div.emscripten_border { border: 1px solid black; }
+      /* the canvas *must not* have any border or padding, or mouse coords will be wrong */
+      canvas.emscripten { border: 0px none; }
+    </style>
+    <link href="//Microsoft.WinJS.1.0/css/ui-light.css" rel="stylesheet" />
+  </head>
+  <body bgcolor='ffffff' style="height:inherit; overflow:scroll;">
+            <script type="text/javascript">
+                function bumpfont() {
+
+                }
+
+                function debumpfont() {
+
+                }
+          </script>
+       
+
+ <h2>Help Contents</h2>
+    <br>
+    <a href="#1">I. Tips on input syntax</a><br>
+    <a href="#2">II. Supported functions</a><br>
+    <a href="#3">III. Tips on reading output</a><br>
+    <br>
+    <hr size="2" width="100%">
+    <h2><a name="1"></a>I. Tips on input syntax
+    </h2>
+          <br>
+    Although this program shows results in standard mathematical
+    notation, expressions must be input in plain-text. <br>
+    <br>
+    <b>New</b><b>:</b> Since version 1.1, implicit multiplication
+    shorthand notations like "5x^3" instead of "5*x^3" and
+    "(1+x)(1+x^2)" instead of "(1+x)*(1+x^2)" are supported.<br>
+    <br>
+    Here are some comparative examples of this syntax:<br>
+    <br>
+    <table border="1" cellpadding="2" cellspacing="2" width="95%" align="center">
+      <tbody>
+        <tr>
+          <td align="center" bgcolor="#cccccc" valign="top" width="50%">Plain-text<br>
+          </td>
+          <td align="center" bgcolor="#cccccc" valign="top">Mathematical
+            notation<br>
+          </td>
+        </tr>
+        <tr>
+          <td align="center" valign="top">x^3<br>
+          </td>
+          <td align="center" valign="top"><img
+src="sample1.png" alt=""><br>
+          </td>
+        </tr>
+        <tr>
+          <td align="center" valign="top">5x^3<br>
+          </td>
+          <td align="center" valign="top"><img
+            src="sample2.png"             alt=""><br>
+          </td>
+        </tr>
+        <tr>
+          <td align="center" valign="top">-e^-x^2<br>
+          </td>
+          <td align="center" valign="top"><img
+src="sample3.png"            alt=""></td>
+        </tr>
+        <tr>
+          <td align="center" valign="top">(1+x)(1+x^2)^2 </td>
+          <td align="center" valign="top"><img
+src="sample4.png"           alt=""></td>
+        </tr>
+        <tr>
+          <td align="center" valign="top">e^(cos(x)sin(x))<br>
+          </td>
+          <td align="center" valign="top"><img
+src="sample5.png"       alt=""></td>
+        </tr>
+        <tr>
+          <td align="center" valign="top">(3x^4 + 5e^x) / (cos(x^x)
+            log(x^2)) * sqrt(1 / cos(x) + arctan(x^x))<br>
+          </td>
+          <td align="center" valign="top"><img
+src="sample6.png"         alt=""></td>
+        </tr>
+      </tbody>
+    </table>
+    <br>
+    It is possible to use the <b>"Preview"</b> button to see how the
+    currently-entered problem translates to standard mathematical
+    notation:<br>
+    <br>
+    <div align="center"><img
+src="data:image/png;base64,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"
+        alt="" height="297" border="1" width="414"><br>
+      <br>
+      <div align="left">Expressions containing irrecoverable syntax
+        errors will not yield any preview, nor will they successfully
+        differentiate.<br>
+        <br>
+        <hr size="2" width="100%">
+        <h2><a name="2"></a>II. Supported functions
+        </h2>
+          <br>
+        This program "knows" the following functions, and therefore can
+        compute derivatives involving them:<br>
+        <br>
+        <table align="center" border="1" cellpadding="2" cellspacing="2"
+          width="70%">
+          <tbody>
+            <tr>
+              <td align="center" bgcolor="#cccccc" valign="top">Function<br>
+              </td>
+              <td align="center" bgcolor="#cccccc" valign="top">Description<br>
+              </td>
+            </tr>
+            <tr>
+              <td align="center">arccos()</td>
+              <td align="center" valign="top" width="50">Inverse cosine<br>
+              </td>
+            </tr>
+            <tr>
+              <td align="center">arccot()</td>
+              <td align="center" valign="top" width="50">Inverse
+                cotangent<br>
+              </td>
+            </tr>
+            <tr>
+              <td align="center">arccsc()</td>
+              <td align="center" valign="top" width="50">Inverse
+                cosecant<br>
+              </td>
+            </tr>
+            <tr>
+              <td align="center">arcsec()</td>
+              <td align="center" valign="top" width="50">Inverse secant<br>
+              </td>
+            </tr>
+            <tr>
+              <td align="center">arcsin()</td>
+              <td align="center" valign="top">Inverse sine<br>
+              </td>
+            </tr>
+            <tr>
+              <td align="center">arctan()</td>
+              <td align="center" valign="top">Inverse tangent<br>
+              </td>
+            </tr>
+            <tr>
+              <td align="center">cos()</td>
+              <td align="center" valign="top">Cosine<br>
+              </td>
+            </tr>
+            <tr>
+              <td align="center" width="50%">cot()</td>
+              <td align="center" valign="top">Cotangent<br>
+              </td>
+            </tr>
+            <tr>
+              <td align="center">csc()</td>
+              <td align="center" valign="top">Cosecant<br>
+              </td>
+            </tr>
+            <tr>
+              <td align="center">e^()</td>
+              <td align="center" valign="top">Exponential<br>
+              </td>
+            </tr>
+            <tr>
+              <td align="center">ln()</td>
+              <td align="center" valign="top">Natural logarithm<br>
+              </td>
+            </tr>
+            <tr>
+              <td align="center">log()</td>
+              <td align="center" valign="top">Natural logarithm<br>
+              </td>
+            </tr>
+            <tr>
+              <td align="center">sec()</td>
+              <td align="center" valign="top">Secant<br>
+              </td>
+            </tr>
+            <tr>
+              <td align="center">sin()</td>
+              <td align="center" valign="top">Sine<br>
+              </td>
+            </tr>
+            <tr>
+              <td align="center">sqrt()</td>
+              <td align="center" valign="top">Square root<br>
+              </td>
+            </tr>
+            <tr>
+              <td align="center">tan()</td>
+              <td align="center" valign="top">Tangent<br>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+	<br>
+	Parentheses around function arguments are mandatory.
+	<br>
+        <hr size="2" width="100%">
+        <h2><a name="3"></a>III. Tips on reading output
+        </h2>
+          <br>
+        Once you have chosen an expression and variable and clicked on <b>"Differentiate"</b>,
+        the program will perform its calculation work and (hopefully)
+        soon enough produce complete steps. The produced results will
+        include:<br>
+        <br>
+        <ul>
+          <li><b>Expressions</b> written out after each step, in black.<br>
+          </li>
+        </ul>
+        <ul>
+          <li><b><font color="blue">Descriptive comments</font></b>
+            explaining most of the steps, written in blue.<br>
+          </li>
+        </ul>
+        <ul>
+          <li><b><font color="red">Changes</font></b> made after a given
+            step, highlighted in red.</li>
+        </ul>
+        <p><br>
+        </p>
+          <br>
+          For example:
+          <br>
+          <center>
+               <img src="example.png">
+              </center>
+        
+      </div>
+    </div>
+    <br>
+  </body>
+</html>
