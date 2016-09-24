@@ -1,3 +1,6 @@
+Step-by-step Derivative Calculator
+==================================
+
 This is the source code for "Step-by-step Derivative Calculator",
 also known as "EasyDerivSteps". It was written by me ("bl0ckeduser")
 in May, June 2013. It is a fork of my project "symdiff" which is 
@@ -15,7 +18,8 @@ Homepage with compiled windows binary download is here:
 https://sites.google.com/site/stepderivcalc
 
 
-----------------------------------------------------------------------
+Compiling
+=========
 
 To compile, emscripten (providing the command "emcc") is required.
 As of writing, I am using version:
