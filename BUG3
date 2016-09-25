@@ -1,0 +1,28 @@
+make def fontsize 2px smaller
+
+To-Do's
+
+generalized product rule...
+
+opt: A * -(1/DERP) * C => (-1 * A  * C) / DERP
+
+----
+
+optimizer feature:	-60 * FOO * -(XXX) => 60 * FOO * XXX			?
+parser feature: dealing with stupid shorthands like 5x, 5x^2, -5cos(3x+1)^4,
+			-(5)^(7-3x)
+
+optimizer feature:	in sums, put positives before negatives
+
++ -1 *
+
+-------
+
+simplify
+
++-	=>	-
+-1*	=>	-
+
+
+t
+

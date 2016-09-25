@@ -1,0 +1,1 @@
+grep '^D(*,*(.*)*))' rules/* | sed 's/D(\(.*\),\(.*\)))\(.*\)/\2/g' | sed 's/\(.*\): //g' | sed 's/$/)/' | sort | uniq | sed 's/))\(.*\)/)/g' | sort | uniq | sed 's/(\(.*\)/()/g'

@@ -1,0 +1,252 @@
+rule 0: D(x, e|x) = 0
+rule 1: D(@x, x) = 1
+rule 2: D(@x, u:x * (#a / #b)) = (a/b) * D(x, u)
+rule 3: D(@x, (#a / #b) * u:x) = (a/b) * D(x, u)
+rule 4: D(@x, #n * u:x) = n * D(x, u)
+rule 5: D(@x, (-(#n)) * u:x) = -n * D(x, u)
+rule 6: D(@x, u * v) = u * D(x, v) + v * D(x, u)
+rule 7: D(@x, -(u:x)) = -D(x, u)
+rule 8: (A / B) / C = A / (B*C)
+rule 9: A / B + C / B^2 = (A * B + C) / B^2
+rule 10: A / B - C / B^2 = (A * B - C) / B^2
+rule 11: A - B = A + (-1 * B)
+rule 12: -(u^b) = -1 * u^b
+rule 13: D(u, sqrt(u)) = 1 / (2 * sqrt(u))
+rule 14: D(u, log(u)) = 1 / u
+rule 15: D(u, ln(u)) = 1 / u
+rule 16: D(?u, sin(u)) = cos(u)
+rule 17: D(u, sin(u)) = cos(u)
+rule 18: D(?u, tan(u)) = sec(u) * sec(u)
+rule 19: D(u, tan(u)) = sec(u) * sec(u)
+rule 20: D(?u, sec(u)) = sec(u) * tan(u)
+rule 21: D(u, sec(u)) = sec(u) * tan(u)
+rule 22: D(?u, cos(u)) = -sin(u)
+rule 23: D(u, cos(u)) = -sin(u)
+rule 24: D(?u, cot(u)) = -csc(u) * csc(u)
+rule 25: D(u, cot(u)) = -csc(u) * csc(u)
+rule 26: D(?u, csc(u)) = -csc(u) * cot(u)
+rule 27: D(u, csc(u)) = -csc(u) * cot(u)
+rule 28: A + -1 * A = 0
+rule 29: A + -A = 0
+rule 30: A - A = 0
+rule 31: -A + A = 0
+rule 32: A + -A = 0
+rule 33: A / A = 1
+rule 34: (A * B + C) / (A * A) = B/A + C/(A * A)
+rule 35: 1 / A * B = B / A
+rule 36: (A + B * C) / C = A/C + B
+rule 37: (A / B) / C = A / (B * C)
+rule 38: 0 / u = 0
+rule 39: 0 * u = 0
+rule 40: u / 1 = u
+rule 41: #a * ((#b * C) / D) = (a * b * C) / D
+rule 42: A * (-A) = -1 * A^2
+rule 43: ?x * (#n * x) / exp = (n * x^2) / exp
+rule 44: D(@var, e::var ^ #u) = u * e ^ (u - 1) * D(var, e)
+rule 45: D(@var, e::var ^ (-(#u))) = -u * e ^ (-u - 1) * D(var, e)
+rule 46: D(x, x^#n) = n * x ^ (n - 1)
+rule 47: D(x, x^(-(#n))) = -n * x ^ ((-n) - 1)
+rule 48: D(a, (b|'e)^(@c)) = D(a, e^(log(b) * c))
+rule 49: D(?u, ('e)^u) = e^u
+rule 50: D(u, ('e)^u) = e^u
+rule 51: log('e) = 1
+rule 52: ln('e) = 1
+rule 53: sqrt(u) ^ 2 = u
+rule 54: (u^#n)^#n2 = u^(n * n2)
+rule 55: a ^ b / a = a^(b-1)
+rule 56: A^1 = A
+rule 57: A^0 = 1
+rule 58: A^(-1) = 1 / A
+rule 59: u^a * u^b = u^(a+b)
+rule 60: E * (E^n) = E^(n+1)
+rule 61: u ^ #n / u = u^(n-1)
+rule 62: u^1 = u
+rule 63: log(sqrt(u)) = log(u) / 2
+rule 64: ln(sqrt(u)) = ln(u) / 2
+rule 65: D(x, 1 / (x^#n)) = D(x, x^-n)
+rule 66: D(x, #n / u) = D(x, n * u^-1)
+rule 67: D(x, (-(#n)) / u) = D(x, -n * u^-1)
+rule 68: D(x, u / #n) =  D(x, u) / n
+rule 69: D(?x, f / #n) = 1 / n * D(x, f)
+rule 70: D(?x, f / g) = (g * D(x, f) - f * D(x, g) ) / (g * g)
+rule 71: D(@var, $func(e::var)) = D(e, func(e)) * D(var, e)
+rule 72: D(@var, e::var ^ #u) = u * e ^ (u - 1) * D(var, e)
+rule 73: D(@var, e::var ^ (-(#u))) = -u * e ^ (-u - 1) * D(var, e)
+rule 74: D(@var, e^(u::var)) = D(u, e^u) * D(var, u)
+rule 75: #a * (b / #c) = (a/c) * b
+rule 76: (#a * E) / (#b * E2) = (a / b * E) / E2
+rule 77: A / (E * A ^ #n) = 1 / (E * A ^ (n-1))
+rule 78: (?x ^ #n * E) / (#n2 * x) = (x^(n-1)*E) / n2
+rule 79: A * B + C * A = A * (B + C)
+rule 80: (?v * #n) / #n2 = (n/n2) * v
+rule 81: (A * u^#a) / u^#b = A * u^(a-b)
+rule 82: A * (1 / B) =  A / B
+rule 83: #a*(#b/c) = (a*b)/c
+rule 84: D(?x, arcsin(x)) = 1/sqrt(1-x^2)
+rule 85: D(x, arcsin(x)) = 1/sqrt(1-x^2)
+rule 86: D(?x, arccos(x)) = -(1/sqrt(1-x^2))
+rule 87: D(x, arccos(x)) = -(1/sqrt(1-x^2))
+rule 88: D(?x, arctan(x)) = 1/(1 + x^2)
+rule 89: D(x, arctan(x)) = 1/(1 + x^2)
+rule 90: D(?x, arccsc(x)) = -1/(sqrt(1-1/x^2) * x^2)
+rule 91: D(x, arccsc(x)) = -1/(sqrt(1-1/x^2) * x^2)
+rule 92: D(?x, arccot(x)) = -1/(x^2 + 1)
+rule 93: D(x, arccot(x)) = -1/(x^2 + 1)
+rule 94: D(?x, arcsec(x)) = 1/(sqrt(1-1/x^2) * x^2)
+rule 95: D(x, arcsec(x)) = 1/(sqrt(1-1/x^2) * x^2)
+rule 96: cos(u) / sin(u) = cot(u)
+rule 97: sin(u) / cos(u) = tan(u)
+rule 98: sin(u)^2 + cos(u)^2 = 1
+rule 99: diff(a, b) = D(b, a)
+rule 0: (A / B) * (C / D) = (A * C) / (B * D)
+rule 1: (A / B) / C = A / (B*C)
+rule 2: A / B + C / B^2 = (A * B + C) / B^2
+rule 3: A / B - C / B^2 = (A * B - C) / B^2
+rule 4: ('e)^(log(x) * k) = x^k
+rule 5: ('e)^(log(x) * k + B) = x^k * e^B
+rule 6: ('e)^(log(x) * k + B + C) = x^k * e^B * e^C
+rule 7: ('e)^(k * log(x)) = x^k
+rule 8: ('e)^(k * log(x) + B + C) = x^k * e^B
+rule 9: ('e)^(k * log(x) + B + C) = x^k * e^B * e^C
+rule 10: ('e)^(log(x) / k) = x^(1/k)
+rule 11: ('e)^(log(u)) = u
+rule 12: a^b/a=a^(b-1)
+rule 13: u^1 = u
+rule 14: (x ^ n) * (B / x) = x^(n-1) * B
+rule 15: u ^ (-1) = 1/u
+rule 16: A + -1 * A = 0
+rule 17: A + -A = 0
+rule 18: A - A = 0
+rule 19: -A + A = 0
+rule 20: A + -A = 0
+rule 21: A / A = 1
+rule 22: (A * B + C) / (A * A) = B/A + C/(A * A)
+rule 23: 1 / A * B = B / A
+rule 24: (A + B * C) / C = A/C + B
+rule 25: (A / B) / C = A / (B * C)
+rule 26: 0 / u = 0
+rule 27: 0 * u = 0
+rule 28: u / 1 = u
+rule 29: (x^n)*(b/x) = x^(n-1)*b
+rule 30: #a * ((#b * C) / D) = (a * b * C) / D
+rule 31: log('e) = 1
+rule 32: sqrt(u) ^ 2 = u
+rule 33: (u^#n)^#n2 = u^(n * n2)
+rule 34: a ^ b / a = a^(b-1)
+rule 35: A^1 = A
+rule 36: A^0 = 1
+rule 37: A^(-1) = 1 / A
+rule 38: E * (E^n) = E^(n+1)
+rule 39: u ^ #n / u = u^(n-1)
+rule 40: (-1 * A) = -A
+rule 41: -1 * a * -b = a * b
+rule 42: #a * (b / #c) = (a/c) * b
+rule 43: (#a * E) / (#b * E2) = (a / b * E) / E2
+rule 44: A / (E * A ^ #n) = 1 / (E * A ^ (n-1))
+rule 45: (?x ^ #n * E) / (#n2 * x) = (x^(n-1)*E) / n2
+rule 46: A * B + C * A = A * (B + C)
+rule 47: (A + B) / (#n * C) = (A/n + B/n) / C
+rule 48: (?v * #n) / #n2 = (n/n2) * v
+rule 49: (A * u^#a) / u^#b = A * u^(a-b)
+rule 50: A * (1 / B) =  A / B
+rule 51: #a*(#b/c) = (a*b)/c
+
+rule 99
+document.getElementById('derp').innerHTML += '<br> $ \\frac{d}{d{x}}\\left[{{x}^{\\sin({x}^{2})}}\\right] $'
+document.getElementById('derp').innerHTML += '<br> $ \\frac{d}{d{x}}\\left[{{x}^{\\sin({x}^{2})}}\\right] $'
+
+rule 48
+x
+\\sin({x}^{2})
+Rewrite $ {x}^{\\sin({x}^{2})} $ as a power of $ e $ to ease further work
+document.getElementById('derp').innerHTML += '<br><br><font color=\'0000ff\'>Rewrite $ {x}^{\\sin({x}^{2})} $ as a power of $ e $ to ease further work</font><br><br> $  = \\color{Red}{\\frac{d}{d{\\color{Red}{x}}}\\left[{\\color{Red}{{e}^{\\color{Red}{(\\color{Red}{\\log(\\color{Red}{x})} \\cdot \\color{Red}{\\sin(\\color{Red}{{x}^{2}})})}}}}\\right]} $'
+document.getElementById('derp').innerHTML += '<br><br><font color=\'0000ff\'>Rewrite $ {x}^{\\sin({x}^{2})} $ as a power of $ e $ to ease further work</font><br><br> $  = \\color{Red}{\\frac{d}{d{\\color{Red}{x}}}\\left[{\\color{Red}{{e}^{\\color{Red}{(\\color{Red}{\\log(\\color{Red}{x})} \\cdot \\color{Red}{\\sin(\\color{Red}{{x}^{2}})})}}}}\\right]} $'
+
+rule 74
+x
+\\log(x) \\cdot \\sin({x}^{2})
+Apply chain rule on $ \\frac{d}{d{x}}\\left[ {e}^{\\log(x) \\cdot \\sin({x}^{2})} \\right] $
+document.getElementById('derp').innerHTML += '<br><br><font color=\'0000ff\'>Apply chain rule on $ \\frac{d}{d{x}}\\left[ {e}^{\\log(x) \\cdot \\sin({x}^{2})} \\right] $</font><br><br> $  = \\color{Red}{\\color{Red}{\\frac{d}{d{\\left[{\\color{Red}{\\color{Red}{\\log(x)} \\cdot \\color{Red}{\\sin(\\color{Red}{{x}^{2}})}}}\\right]}}\\left[{\\color{Red}{{\\color{Red}{e}}^{\\color{Red}{(\\color{Red}{\\log(x)} \\cdot \\color{Red}{\\sin(\\color{Red}{{x}^{2}})})}}}}\\right]} \\cdot \\color{Red}{\\frac{d}{d{\\color{Red}{x}}}\\left[{\\color{Red}{\\color{Red}{\\log(x)} \\cdot \\color{Red}{\\sin(\\color{Red}{{x}^{2}})}}}\\right]}} $'
+document.getElementById('derp').innerHTML += '<br><br><font color=\'0000ff\'>Apply chain rule on $ \\frac{d}{d{x}}\\left[ {e}^{\\log(x) \\cdot \\sin({x}^{2})} \\right] $</font><br><br> $  = \\color{Red}{\\color{Red}{\\frac{d}{d{\\left[{\\color{Red}{\\color{Red}{\\log(x)} \\cdot \\color{Red}{\\sin(\\color{Red}{{x}^{2}})}}}\\right]}}\\left[{\\color{Red}{{\\color{Red}{e}}^{\\color{Red}{(\\color{Red}{\\log(x)} \\cdot \\color{Red}{\\sin(\\color{Red}{{x}^{2}})})}}}}\\right]} \\cdot \\color{Red}{\\frac{d}{d{\\color{Red}{x}}}\\left[{\\color{Red}{\\color{Red}{\\log(x)} \\cdot \\color{Red}{\\sin(\\color{Red}{{x}^{2}})}}}\\right]}} $'
+
+rule 50
+\\log(x) \\cdot \\sin({x}^{2})
+$ \\frac{d}{d{u}}\\left[{{e}^{u}}\\right] = {e}^{u} $; here $ u = $  $ \\log(x) \\cdot \\sin({x}^{2}) $ 
+document.getElementById('derp').innerHTML += '<br><br><font color=\'0000ff\'>$ \\frac{d}{d{u}}\\left[{{e}^{u}}\\right] = {e}^{u} $; here $ u = $  $ \\log(x) \\cdot \\sin({x}^{2}) $ </font><br><br> $  = \\color{Red}{{\\color{Red}{e}}^{\\color{Red}{(\\color{Red}{\\log(x)} \\cdot \\color{Red}{\\sin(\\color{Red}{{x}^{2}})})}}} \\cdot \\frac{d}{d{x}}\\left[{\\log(x) \\cdot \\sin({x}^{2})}\\right] $'
+document.getElementById('derp').innerHTML += '<br><br><font color=\'0000ff\'>$ \\frac{d}{d{u}}\\left[{{e}^{u}}\\right] = {e}^{u} $; here $ u = $  $ \\log(x) \\cdot \\sin({x}^{2}) $ </font><br><br> $  = \\color{Red}{{\\color{Red}{e}}^{\\color{Red}{(\\color{Red}{\\log(x)} \\cdot \\color{Red}{\\sin(\\color{Red}{{x}^{2}})})}}} \\cdot \\frac{d}{d{x}}\\left[{\\log(x) \\cdot \\sin({x}^{2})}\\right] $'
+
+rule 6
+x
+\\log(x)
+\\sin({x}^{2})
+Apply product rule on $ \\frac{d}{d{x}}\\left[  (\\log(x) )  \\cdot  (\\sin({x}^{2}) )  \\right] $
+document.getElementById('derp').innerHTML += '<br><br><font color=\'0000ff\'>Apply product rule on $ \\frac{d}{d{x}}\\left[  (\\log(x) )  \\cdot  (\\sin({x}^{2}) )  \\right] $</font><br><br> $  = {e}^{(\\log(x) \\cdot \\sin({x}^{2}))} \\cdot \\color{Red}{(\\color{Red}{\\color{Red}{\\log(x)} \\cdot \\color{Red}{\\frac{d}{d{\\color{Red}{x}}}\\left[{\\color{Red}{\\sin(\\color{Red}{{x}^{2}})}}\\right]}} + \\color{Red}{\\color{Red}{\\sin(\\color{Red}{{x}^{2}})} \\cdot \\color{Red}{\\frac{d}{d{\\color{Red}{x}}}\\left[{\\color{Red}{\\log(x)}}\\right]}})} $'
+document.getElementById('derp').innerHTML += '<br><br><font color=\'0000ff\'>Apply product rule on $ \\frac{d}{d{x}}\\left[  (\\log(x) )  \\cdot  (\\sin({x}^{2}) )  \\right] $</font><br><br> $  = {e}^{(\\log(x) \\cdot \\sin({x}^{2}))} \\cdot \\color{Red}{(\\color{Red}{\\color{Red}{\\log(x)} \\cdot \\color{Red}{\\frac{d}{d{\\color{Red}{x}}}\\left[{\\color{Red}{\\sin(\\color{Red}{{x}^{2}})}}\\right]}} + \\color{Red}{\\color{Red}{\\sin(\\color{Red}{{x}^{2}})} \\cdot \\color{Red}{\\frac{d}{d{\\color{Red}{x}}}\\left[{\\color{Red}{\\log(x)}}\\right]}})} $'
+
+rule 71
+x
+\\sin({x}^{2})
+Apply chain rule on $ \\frac{d}{d{x}}\\left[ \\sin({x}^{2}) \\right] $
+document.getElementById('derp').innerHTML += '<br><br><font color=\'0000ff\'>Apply chain rule on $ \\frac{d}{d{x}}\\left[ \\sin({x}^{2}) \\right] $</font><br><br> $  = {e}^{(\\log(x) \\cdot \\sin({x}^{2}))} \\cdot (\\log(x) \\cdot \\color{Red}{\\color{Red}{\\frac{d}{d{\\left[{\\color{Red}{{x}^{2}}}\\right]}}\\left[{\\color{Red}{\\sin(\\color{Red}{{x}^{2}})}}\\right]} \\cdot \\color{Red}{\\frac{d}{d{\\color{Red}{x}}}\\left[{\\color{Red}{{x}^{2}}}\\right]}} + \\sin({x}^{2}) \\cdot \\frac{d}{d{x}}\\left[{\\log(x)}\\right]) $'
+document.getElementById('derp').innerHTML += '<br><br><font color=\'0000ff\'>Apply chain rule on $ \\frac{d}{d{x}}\\left[ \\sin({x}^{2}) \\right] $</font><br><br> $  = {e}^{(\\log(x) \\cdot \\sin({x}^{2}))} \\cdot (\\log(x) \\cdot \\color{Red}{\\color{Red}{\\frac{d}{d{\\left[{\\color{Red}{{x}^{2}}}\\right]}}\\left[{\\color{Red}{\\sin(\\color{Red}{{x}^{2}})}}\\right]} \\cdot \\color{Red}{\\frac{d}{d{\\color{Red}{x}}}\\left[{\\color{Red}{{x}^{2}}}\\right]}} + \\sin({x}^{2}) \\cdot \\frac{d}{d{x}}\\left[{\\log(x)}\\right]) $'
+
+rule 17
+{x}^{2}
+$ \\frac{d}{d{u}}\\left[ \\sin({u}) \\right] = \\cos({u}) $; here $ u = {x}^{2} $
+document.getElementById('derp').innerHTML += '<br><br><font color=\'0000ff\'>$ \\frac{d}{d{u}}\\left[ \\sin({u}) \\right] = \\cos({u}) $; here $ u = {x}^{2} $</font><br><br> $  = {e}^{(\\log(x) \\cdot \\sin({x}^{2}))} \\cdot (\\log(x) \\cdot \\color{Red}{\\cos(\\color{Red}{{x}^{2}})} \\cdot \\frac{d}{d{x}}\\left[{{x}^{2}}\\right] + \\sin({x}^{2}) \\cdot \\frac{d}{d{x}}\\left[{\\log(x)}\\right]) $'
+document.getElementById('derp').innerHTML += '<br><br><font color=\'0000ff\'>$ \\frac{d}{d{u}}\\left[ \\sin({u}) \\right] = \\cos({u}) $; here $ u = {x}^{2} $</font><br><br> $  = {e}^{(\\log(x) \\cdot \\sin({x}^{2}))} \\cdot (\\log(x) \\cdot \\color{Red}{\\cos(\\color{Red}{{x}^{2}})} \\cdot \\frac{d}{d{x}}\\left[{{x}^{2}}\\right] + \\sin({x}^{2}) \\cdot \\frac{d}{d{x}}\\left[{\\log(x)}\\right]) $'
+
+rule 46
+x
+x
+2
+Apply power rule on $ \\frac{d}{d{x}} \\left[ {x}^{2} \\right] $
+document.getElementById('derp').innerHTML += '<br><br><font color=\'0000ff\'>Apply power rule on $ \\frac{d}{d{x}} \\left[ {x}^{2} \\right] $</font><br><br> $  = {e}^{(\\log(x) \\cdot \\sin({x}^{2}))} \\cdot (\\log(x) \\cdot \\cos({x}^{2}) \\cdot \\color{Red}{\\color{Red}{2}\\color{Red}{{\\color{Red}{x}}^{\\color{Red}{(\\color{Red}{2} - 1)}}}} + \\sin({x}^{2}) \\cdot \\frac{d}{d{x}}\\left[{\\log(x)}\\right]) $'
+document.getElementById('derp').innerHTML += '<br><br><font color=\'0000ff\'>Apply power rule on $ \\frac{d}{d{x}} \\left[ {x}^{2} \\right] $</font><br><br> $  = {e}^{(\\log(x) \\cdot \\sin({x}^{2}))} \\cdot (\\log(x) \\cdot \\cos({x}^{2}) \\cdot \\color{Red}{\\color{Red}{2}\\color{Red}{{\\color{Red}{x}}^{\\color{Red}{(\\color{Red}{2} - 1)}}}} + \\sin({x}^{2}) \\cdot \\frac{d}{d{x}}\\left[{\\log(x)}\\right]) $'
+
+rule 11
+document.getElementById('derp').innerHTML += '<br><br><font color=\'0000ff\'>Apply power rule on $ \\frac{d}{d{x}} \\left[ {x}^{2} \\right] $</font><br><br> $  = {e}^{(\\log(x) \\cdot \\sin({x}^{2}))} \\cdot (\\log(x) \\cdot \\cos({x}^{2}) \\cdot \\color{Red}{\\color{Red}{2}\\color{Red}{{\\color{Red}{x}}^{\\color{Red}{(\\color{Red}{2} - 1)}}}} + \\sin({x}^{2}) \\cdot \\frac{d}{d{x}}\\left[{\\log(x)}\\right]) $'
+
+rule 14
+x
+$ \\frac{d}{d{u}}\\left[ \\log(u) \\right] = \\frac{1}{u} $; here $ u = x $
+document.getElementById('derp').innerHTML += '<br><br><font color=\'0000ff\'>$ \\frac{d}{d{u}}\\left[ \\log(u) \\right] = \\frac{1}{u} $; here $ u = x $</font><br><br> $  = {e}^{(\\log(x) \\cdot \\sin({x}^{2}))} \\cdot (\\log(x) \\cdot \\cos({x}^{2}) \\cdot 2{x}^{(2 - 1)} + \\sin({x}^{2}) \\cdot \\color{Red}{\\frac{1}{\\color{Red}{x}}}) $'
+document.getElementById('derp').innerHTML += '<br><br><font color=\'0000ff\'>$ \\frac{d}{d{u}}\\left[ \\log(u) \\right] = \\frac{1}{u} $; here $ u = x $</font><br><br> $  = {e}^{(\\log(x) \\cdot \\sin({x}^{2}))} \\cdot (\\log(x) \\cdot \\cos({x}^{2}) \\cdot 2{x}^{(2 - 1)} + \\sin({x}^{2}) \\cdot \\color{Red}{\\frac{1}{\\color{Red}{x}}}) $'
+
+D: leaving optimizer at line 261
+D: leaving optimizer at line 261
+D: leaving optimizer at line 261
+D: leaving optimizer at line 372
+D: leaving optimizer at line 372
+document.getElementById('derp').innerHTML += '<br><br> $  = {e}^{(\\log(x) \\cdot \\sin({x}^{2}))} \\cdot (\\log(x) \\cdot \\cos({x}^{2}) \\cdot 2{x}^{\\color{Red}{1}} + \\sin({x}^{2}) \\cdot \\frac{1}{x}) $'
+document.getElementById('derp').innerHTML += '<br><br> $  = {e}^{(\\log(x) \\cdot \\sin({x}^{2}))} \\cdot (\\log(x) \\cdot \\cos({x}^{2}) \\cdot 2{x}^{\\color{Red}{1}} + \\sin({x}^{2}) \\cdot \\frac{1}{x}) $'
+
+rule 56
+document.getElementById('derp').innerHTML += '<br><br> $  = {e}^{(\\log(x) \\cdot \\sin({x}^{2}))} \\cdot (\\log(x) \\cdot \\cos({x}^{2}) \\cdot 2\\color{Red}{x} + \\sin({x}^{2}) \\cdot \\frac{1}{x}) $'
+document.getElementById('derp').innerHTML += '<br><br> $  = {e}^{(\\log(x) \\cdot \\sin({x}^{2}))} \\cdot (\\log(x) \\cdot \\cos({x}^{2}) \\cdot 2\\color{Red}{x} + \\sin({x}^{2}) \\cdot \\frac{1}{x}) $'
+
+rule 82
+document.getElementById('derp').innerHTML += '<br><br> $  = {e}^{(\\log(x) \\cdot \\sin({x}^{2}))} \\cdot (\\log(x) \\cdot \\cos({x}^{2}) \\cdot 2x + \\color{Red}{\\frac{\\color{Red}{\\sin(\\color{Red}{{x}^{2}})}}{\\color{Red}{x}}}) $'
+document.getElementById('derp').innerHTML += '<br><br> $  = {e}^{(\\log(x) \\cdot \\sin({x}^{2}))} \\cdot (\\log(x) \\cdot \\cos({x}^{2}) \\cdot 2x + \\color{Red}{\\frac{\\color{Red}{\\sin(\\color{Red}{{x}^{2}})}}{\\color{Red}{x}}}) $'
+
+document.getElementById('derp').innerHTML += '<br><br> $  = {e}^{(\\log(x) \\cdot \\sin({x}^{2}))} \\cdot (\\log(x) \\cdot \\cos({x}^{2}) \\cdot 2x + \\color{Red}{\\frac{\\color{Red}{\\sin(\\color{Red}{{x}^{2}})}}{\\color{Red}{x}}}) $'
+
+document.getElementById('derp').innerHTML += '<br><br> $  = {e}^{(\\log(x) \\cdot \\sin({x}^{2}))} \\cdot (\\log(x) \\cdot \\cos({x}^{2}) \\cdot 2x + \\color{Red}{\\frac{\\color{Red}{\\sin(\\color{Red}{{x}^{2}})}}{\\color{Red}{x}}}) $'
+
+rule 4
+document.getElementById('derp').innerHTML += '<br><br> $  = \\color{Red}{{\\color{Red}{x}}^{\\color{Red}{\\sin(\\color{Red}{{x}^{2}})}}} \\cdot (\\log(x) \\cdot \\cos({x}^{2}) \\cdot 2x + \\frac{\\sin({x}^{2})}{x}) $'
+document.getElementById('derp').innerHTML += '<br><br> $  = \\color{Red}{{\\color{Red}{x}}^{\\color{Red}{\\sin(\\color{Red}{{x}^{2}})}}} \\cdot (\\log(x) \\cdot \\cos({x}^{2}) \\cdot 2x + \\frac{\\sin({x}^{2})}{x}) $'
+
+D: leaving optimizer at line 917
+document.getElementById('derp').innerHTML += '<br><br> $  = \\color{Red}{\\color{Red}{\\color{Red}{{x}^{\\color{Red}{\\sin(\\color{Red}{{x}^{2}})}}} \\cdot \\color{Red}{\\color{Red}{\\log(x)} \\cdot \\color{Red}{\\cos(\\color{Red}{{x}^{2}})} \\cdot 2x}} + \\color{Red}{\\color{Red}{\\sin(\\color{Red}{{x}^{2}})} \\cdot \\color{Red}{{x}^{\\color{Red}{(\\color{Red}{\\sin(\\color{Red}{{x}^{2}})} - \\color{Red}{1})}}}}} $'
+document.getElementById('derp').innerHTML += '<br><br> $  = \\color{Red}{\\color{Red}{\\color{Red}{{x}^{\\color{Red}{\\sin(\\color{Red}{{x}^{2}})}}} \\cdot \\color{Red}{\\color{Red}{\\log(x)} \\cdot \\color{Red}{\\cos(\\color{Red}{{x}^{2}})} \\cdot 2x}} + \\color{Red}{\\color{Red}{\\sin(\\color{Red}{{x}^{2}})} \\cdot \\color{Red}{{x}^{\\color{Red}{(\\color{Red}{\\sin(\\color{Red}{{x}^{2}})} - \\color{Red}{1})}}}}} $'
+
+D: leaving optimizer at line 372
+document.getElementById('derp').innerHTML += '<br><br> $  = \\color{Red}{\\color{Red}{\\color{Red}{{x}^{\\color{Red}{\\sin(\\color{Red}{{x}^{2}})}}} \\cdot \\color{Red}{\\color{Red}{\\log(x)} \\cdot \\color{Red}{\\cos(\\color{Red}{{x}^{2}})} \\cdot 2x}} + \\color{Red}{\\color{Red}{\\sin(\\color{Red}{{x}^{2}})} \\cdot \\color{Red}{{x}^{\\color{Red}{(\\color{Red}{\\sin(\\color{Red}{{x}^{2}})} - \\color{Red}{1})}}}}} $'
+
+document.getElementById('derp').innerHTML += '<br><br> $  = \\color{Red}{\\color{Red}{\\color{Red}{{x}^{\\color{Red}{\\sin(\\color{Red}{{x}^{2}})}}} \\cdot \\color{Red}{\\color{Red}{\\log(x)} \\cdot \\color{Red}{\\cos(\\color{Red}{{x}^{2}})} \\cdot 2x}} + \\color{Red}{\\color{Red}{\\sin(\\color{Red}{{x}^{2}})} \\cdot \\color{Red}{{x}^{\\color{Red}{(\\color{Red}{\\sin(\\color{Red}{{x}^{2}})} - \\color{Red}{1})}}}}} $'
+
+document.getElementById('derp').innerHTML += '<br><br> $  = \\color{Red}{\\color{Red}{\\color{Red}{{x}^{\\color{Red}{\\sin(\\color{Red}{{x}^{2}})}}} \\cdot \\color{Red}{\\color{Red}{\\log(x)} \\cdot \\color{Red}{\\cos(\\color{Red}{{x}^{2}})} \\cdot 2x}} + \\color{Red}{\\color{Red}{\\sin(\\color{Red}{{x}^{2}})} \\cdot \\color{Red}{{x}^{\\color{Red}{(\\color{Red}{\\sin(\\color{Red}{{x}^{2}})} - \\color{Red}{1})}}}}} $'
+
+document.getElementById('derp').innerHTML += '<br><br> $  = \\color{Red}{\\color{Red}{\\color{Red}{{x}^{\\color{Red}{\\sin(\\color{Red}{{x}^{2}})}}} \\cdot \\color{Red}{\\color{Red}{\\log(x)} \\cdot \\color{Red}{\\cos(\\color{Red}{{x}^{2}})} \\cdot 2x}} + \\color{Red}{\\color{Red}{\\sin(\\color{Red}{{x}^{2}})} \\cdot \\color{Red}{{x}^{\\color{Red}{(\\color{Red}{\\sin(\\color{Red}{{x}^{2}})} - \\color{Red}{1})}}}}} $'
+
