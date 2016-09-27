@@ -13,10 +13,9 @@ The source is somewhat hacky / messy in spots. Some of the step-by-step
 stuff was quickly done. I have however added a reasonable quantity of comments.
 
 
-Homepage with compiled windows binary download is here:
+Homepage with compiled windows/linux/other binary download is here:
 
-https://sites.google.com/site/stepderivcalc
-
+https://sites.google.com/site/stepderivcalc/classic-windows-version
 
 Compiling
 =========
