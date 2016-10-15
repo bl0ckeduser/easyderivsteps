@@ -1,1 +1,1 @@
-pluma BUG3 README TEST *.c *.html *.h &
+pluma BUG3 README.md TEST *.c *.html *.h &
