@@ -1,0 +1,4 @@
+body bgcolor = #4c4c4c
+text color = #ffffff
+desc text color = #8fafef
+

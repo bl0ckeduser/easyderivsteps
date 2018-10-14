@@ -7,6 +7,23 @@
     height="600"
     persist="screenX screenY width height sizemode">
     <script>
+	var useDark = false;
+	function getTheme() {
+		return useDark;
+	}
+	function toggleTheme() {
+		b = document.getElementById("id_browser");
+		useDark = !useDark;
+		b.contentWindow.setTheme(useDark);
+		b.contentWindow.applyTheme();
+	}
+	function doReload() {
+		b = document.getElementById("id_browser");
+		//b.setAttribute("src", "index_" + useDark + ".html");
+		//alert(b.getAttribute("src"));
+		//b.reload();
+		b.contentDocument.location.href = "index_" + useDark + ".html";
+	}
 	function incfont() {
 		// http://stackoverflow.com/questions/8489251/call-a-javascript-function-which-is-defined-linked-in-a-xul-browser-element
 		b = document.getElementById("id_browser");
@@ -26,12 +43,13 @@
    </script>
 <toolbox> 
     <toolbar>
-      <toolbarbutton label="New Derivative" orient="vertical" image="images/filenew.png" oncommand=" window.location.reload();"/>
+      <toolbarbutton label="New Derivative" orient="vertical" image="images/filenew.png" oncommand=" doReload();"/>
       <toolbarbutton label="Help" oncommand='window.open("chrome://webapp/content/help.xul", "about", "chrome,width=800,height=700,centerscreen,resizable,dialog");' orient="vertical" image="images/help_about.png"/>
       <toolbarbutton label="About this software" orient="vertical" image="images/help_about.png" oncommand='window.open("chrome://webapp/content/about.xul", "about", "chrome,width=800,height=700,centerscreen,resizable,dialog");'/>
       <toolbarbutton label="Increase font" oncommand="incfont();" orient="vertical" image="images/zoom_in.png"/>
       <toolbarbutton label="Decrease font" oncommand="decfont();" orient="vertical" image="images/zoom_out.png"/>
       <toolbarbutton label="Save as PNG" oncommand="savePNG();" orient="vertical" image="images/document-save-as.png"/>
+      <toolbarbutton label="Toggle light/dark themes" oncommand="toggleTheme();" orient="vertical" image="images/help_about.png"/>
       <toolbarbutton label="Quit" oncommand="window.close();" orient="vertical" image="images/application-exit.png"/>
     </toolbar>
 </toolbox>

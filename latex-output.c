@@ -210,7 +210,7 @@ void printout_tree_latex(exp_tree_t et, desc_tab *dt)
 			 * write it out in blue. */
 			if (count && *step_desc) {
 				strcat(full, "<br><br>");
-				strcat(full, "<font color=\\'0000ff\\'>");
+				strcat(full, "<font color=\\'' + getDescriptiveTextColorForTheme() + '\\'>");
 				strcat(full, step_desc);
 				strcat(full, "</font>");
 			}

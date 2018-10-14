@@ -23,14 +23,13 @@ Feel free to send bug reports, comments, criticism, etc. to me via my email,
     bl0ckedusersoft@gmail.com
 
 Updates, alternative versions, etc. can be found at the program's homepage:
-    https://sites.google.com/site/bl0ckeduserssoftware/easyderivsteps
+    https://sites.google.com/site/stepderivcalc
 
 Updates are planned, in particular with respect to the program's algebraic
 simplifications capabilities, which are still deficient in some areas.
 
-The source code for part of the program can be found at 
-    https://github.com/bl0ckeduser/symdiff
-The whole program may be open-sourced at some point.
+The source code for the program can be found at 
+    https://github.com/bl0ckeduser/easyderivsteps
 
 This program makes use of the software technologies emscripten, MathJax,
 and XULRunner. It also uses icons created by Oxygen Team. Further 
@@ -40,7 +39,10 @@ details on this can be found by clicking on the "About" button.
 
                              Version history
 
-- Version 1.10
+- Version 1.11 - 14 October 2018
+  Add an option to switch to a dark theme
+
+- Version 1.10 - 24 September 2016
   Fixed an infinite loop in the algebraic simplification code;
   slightly improved step-description comments in certain cases;
   slightly improved GUI (autofocus on OK, hide debug text, fix icon);
